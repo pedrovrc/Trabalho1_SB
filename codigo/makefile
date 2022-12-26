@@ -13,14 +13,14 @@ main: main.o preprocessamento.o macros.o tradutor.o
 main.o: main.cpp preprocessamento.h macros.h tradutor.h
 	$(CC) $(CFLAGS) -c main.cpp
 
-preprocessamento.o: preprocessamento.cpp preprocessamento.h
-	$(CC) $(CFLAGS) -c preprocessamento.cpp
+preprocessamento.o: preprocessamento.h
+	$(CC) $(CFLAGS) -c preprocessamento.h
 
-macros.o: macros.cpp macros.h
-	$(CC) $(CFLAGS) -c macros.cpp
+macros.o: macros.h
+	$(CC) $(CFLAGS) -c macros.h
 
-tradutor.o: tradutor.cpp tradutor.h
-	$(CC) $(CFLAGS) -c tradutor.cpp
+tradutor.o: tradutor.h
+	$(CC) $(CFLAGS) -c tradutor.h
 
 clean:
 	$(RM) $main
