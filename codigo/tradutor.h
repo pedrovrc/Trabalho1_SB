@@ -1,3 +1,4 @@
-void tradutor(fstream codigo) {
-    return;
-}
+#include <fstream>
+using namespace std;
+
+void tradutor(fstream& codigo);

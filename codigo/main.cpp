@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
+using namespace std;
+
 #include "preprocessamento.h"
 #include "macros.h"
 #include "tradutor.h"
-using namespace std;
 
 /*
     Modo de usar o programa:
@@ -15,7 +17,7 @@ using namespace std;
 */
 
 int main(int argc, char* argv[]) {
-    if (argc == 2) {    // qtd de argumentos correta
+    if (argc == 3) {    // qtd de argumentos correta
 
         fstream codigo_base;
         string nome_arquivo;
@@ -27,9 +29,9 @@ int main(int argc, char* argv[]) {
             return 0;
         }
 
-        if (argv[1] == "-p") {  // executa pre-processamento
+        if ((string)argv[1] == "-p") {  // executa pre-processamento
             preprocessamento(codigo_base);
-        } else if (argv[1] == "-m") {   // executa macros
+        } else if ((string)argv[1] == "-m") {   // executa macros
             preprocessamento(codigo_base);
 
             fstream codigo_preprocessado;
@@ -38,7 +40,7 @@ int main(int argc, char* argv[]) {
             macros(codigo_preprocessado);
 
             codigo_preprocessado.close();
-        } else if (argv[1] == "-o") {   // executa pre-processamento, macros e tradutor
+        } else if ((string)argv[1] == "-o") {   // executa pre-processamento, macros e tradutor
             preprocessamento(codigo_base);
             
             fstream codigo_preprocessado;
@@ -54,13 +56,13 @@ int main(int argc, char* argv[]) {
             codigo_preprocessado.close();
             codigo_macros.close();
         } else {    // diretiva de uso do programa nao reconhecida
-            cout << "Uso incorreto do programa. Exemplo de uso: ./montador -o programa" << endl;
+            cout << "Uso incorreto do programa1. Exemplo de uso: ./montador -o programa" << endl;
         }
 
         codigo_base.close();
 
     } else {    // qtd de argumentos incorreta
-        cout << "Uso incorreto do programa. Exemplo de uso: ./montador -o programa" << endl;
+        cout << "Uso incorreto do programa2. Exemplo de uso: ./montador -o programa" << endl;
     }
 
     return 0;
