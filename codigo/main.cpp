@@ -19,20 +19,13 @@ using namespace std;
 int main(int argc, char* argv[]) {
     if (argc == 3) {    // qtd de argumentos correta
 
-        fstream codigo_base;
         string nome_arquivo;
         nome_arquivo = (string)argv[2] + ".asm";
-        codigo_base.open(nome_arquivo, ios::in);
-
-        if (!codigo_base) {
-            cout << "Erro ao abrir arquivo." << endl;
-            return 0;
-        }
 
         if ((string)argv[1] == "-p") {  // executa pre-processamento
-            preprocessamento(codigo_base);
+            preprocessamento(nome_arquivo);
         } else if ((string)argv[1] == "-m") {   // executa macros
-            preprocessamento(codigo_base);
+            preprocessamento(nome_arquivo);
 
             fstream codigo_preprocessado;
             codigo_preprocessado.open("preproc.pre", ios::in);
@@ -41,7 +34,7 @@ int main(int argc, char* argv[]) {
 
             codigo_preprocessado.close();
         } else if ((string)argv[1] == "-o") {   // executa pre-processamento, macros e tradutor
-            preprocessamento(codigo_base);
+            preprocessamento(nome_arquivo);
             
             fstream codigo_preprocessado;
             codigo_preprocessado.open("preproc.pre", ios::in);
@@ -58,8 +51,6 @@ int main(int argc, char* argv[]) {
         } else {    // diretiva de uso do programa nao reconhecida
             cout << "Uso incorreto do programa1. Exemplo de uso: ./montador -o programa" << endl;
         }
-
-        codigo_base.close();
 
     } else {    // qtd de argumentos incorreta
         cout << "Uso incorreto do programa2. Exemplo de uso: ./montador -o programa" << endl;
