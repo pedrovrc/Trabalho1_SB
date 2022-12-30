@@ -24,29 +24,20 @@ int main(int argc, char* argv[]) {
 
         if ((string)argv[1] == "-p") {  // executa pre-processamento
             preprocessamento(nome_arquivo);
+            
         } else if ((string)argv[1] == "-m") {   // executa macros
             preprocessamento(nome_arquivo);
+            macros("preproc.pre");
 
-            fstream codigo_preprocessado;
-            codigo_preprocessado.open("preproc.pre", ios::in);
-
-            macros(codigo_preprocessado);
-
-            codigo_preprocessado.close();
         } else if ((string)argv[1] == "-o") {   // executa pre-processamento, macros e tradutor
             preprocessamento(nome_arquivo);
-            
-            fstream codigo_preprocessado;
-            codigo_preprocessado.open("preproc.pre", ios::in);
-
-            macros(codigo_preprocessado);
+            macros("preproc.pre");
 
             fstream codigo_macros;
             codigo_macros.open("macros.mcr", ios::in);
             
             tradutor(codigo_macros);
 
-            codigo_preprocessado.close();
             codigo_macros.close();
         } else {    // diretiva de uso do programa nao reconhecida
             cout << "Uso incorreto do programa1. Exemplo de uso: ./montador -o programa" << endl;

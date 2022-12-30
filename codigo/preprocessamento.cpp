@@ -35,6 +35,27 @@ void preprocessamento(string nome_arquivo) {
     while (!(codigo_base.eof())) {
         getline(codigo_base, line);
 
+        // retira comentario
+        if (line.find(";") != string::npos) {
+            // ignora espacos
+            i = 0;
+            while(isspace(line[i])) {
+                i++;
+            }
+            if (line[i] == ';') {   // comentario de linha inteira
+                continue;
+
+            } else {                // comentario inline
+                i = 0;
+                while(line[i] != ';') {
+                    i++;
+                }
+                if (line[i] == ';') {
+                    line.erase(i, string::npos);
+                }
+            }
+        }
+
         if (line.find("EQU") != string::npos) {
             // processa EQU
             // obtem nome da variavel do EQU
@@ -69,7 +90,6 @@ void preprocessamento(string nome_arquivo) {
             values[count_EQU-1] = var_value;
 
             continue;
-
         }
 
         // modificacoes para EQU
@@ -102,6 +122,7 @@ void preprocessamento(string nome_arquivo) {
     }
 
     newcode.close();
+    codigo_base.close();
 
     return;
 }
