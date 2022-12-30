@@ -12,7 +12,7 @@ using namespace std;
     Modo de usar o programa:
     ./montador -<op> -<arquivo>
 
-    Arquivo sem extensão - assumir que usuário usa extensões corretas
+    Arquivo sem extensao - assumir que usuario usa extensoes corretas
     Operações possíveis: -p, -m, -o.
 */
 
@@ -22,16 +22,24 @@ int main(int argc, char* argv[]) {
         string nome_arquivo;
         nome_arquivo = (string)argv[2] + ".asm";
 
+        // converte texto para all caps
+        string nome_arq_upper;
+        nome_arq_upper = (string)argv[2] + "UPPER.asm";
+        file2UPPER(nome_arquivo, nome_arq_upper);
+        
+        string nome_preproc;
+        nome_preproc = "preproc.pre";
+
         if ((string)argv[1] == "-p") {  // executa pre-processamento
-            preprocessamento(nome_arquivo);
-            
+            preprocessamento(nome_arq_upper);
+
         } else if ((string)argv[1] == "-m") {   // executa macros
-            preprocessamento(nome_arquivo);
-            macros("preproc.pre");
+            preprocessamento(nome_arq_upper);
+            macros(nome_preproc);
 
         } else if ((string)argv[1] == "-o") {   // executa pre-processamento, macros e tradutor
-            preprocessamento(nome_arquivo);
-            macros("preproc.pre");
+            preprocessamento(nome_arq_upper);
+            macros(nome_preproc);
 
             fstream codigo_macros;
             codigo_macros.open("macros.mcr", ios::in);

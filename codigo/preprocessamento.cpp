@@ -1,6 +1,9 @@
 #include <fstream>
 #include <iostream>
+#include <cctype>
 using namespace std;
+
+#define EQU_QUANT 5
 
 /*
     Processa diretivas EQU e IF e salva resultado num arquivo chamado preproc.pre
@@ -25,8 +28,8 @@ void preprocessamento(string nome_arquivo) {
     string line;
     string var_name;
     string var_value;
-    string names[5];
-    string values[5];
+    string names[EQU_QUANT];
+    string values[EQU_QUANT];
     char aux;
     int i, pos;
     int count_EQU = 0;
@@ -126,3 +129,33 @@ void preprocessamento(string nome_arquivo) {
 
     return;
 }
+
+void file2UPPER(string base_filename, string new_filename) {
+    ifstream base_file;
+    base_file.open(base_filename);
+
+    ofstream new_file;
+    new_file.open(new_filename);
+
+    string line_read, new_line;
+
+    while (!(base_file.eof())) {
+        getline(base_file, line_read);
+        new_line.clear();
+        for (int i = 0; i < (int)line_read.length(); i++) {
+            if (isalpha(line_read[i])) {
+                new_line += toupper(line_read[i]);
+                continue;
+            }
+            new_line += line_read[i];
+        }
+        new_line += '\n';
+        new_file << new_line;
+    }
+
+    base_file.close();
+    new_file.close();
+
+    return;
+}
+
