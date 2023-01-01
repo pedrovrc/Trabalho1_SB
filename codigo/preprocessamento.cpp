@@ -33,10 +33,19 @@ void preprocessamento(string nome_arquivo) {
     char aux;
     int i, pos;
     int count_EQU = 0;
+    int section_flag = 0;
 
     // loop para leitura e escrita
     while (!(codigo_base.eof())) {
         getline(codigo_base, line);
+
+        // checa por SECTION
+        if (line.find("SECTION") != string::npos) {
+            if (line.find("TEXT") != string::npos) {
+                section_flag++;
+            }
+            continue;
+        }
 
         // retira comentario
         if (line.find(";") != string::npos) {
@@ -122,6 +131,12 @@ void preprocessamento(string nome_arquivo) {
         line.append("\n");
         newcode << line;
         line.clear();
+    }
+
+    if (section_flag == 0) {
+        cout << "WARNING: TEXT SECTION NOT FOUND" << endl;
+    } else if (section_flag > 1) {
+        cout << "WARNING: MULTIPLE TEXT SECTIONS FOUND" << endl;
     }
 
     newcode.close();
