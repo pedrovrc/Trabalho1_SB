@@ -148,6 +148,9 @@ void tradutor()
     }
     // aqui temos a tabela de simbolos completa
 
+    // reset stream
+    codigo_base.close();
+    codigo_base.open("macros.mcr", fstream::in);
 
     vector<int> resultado;
     lastWordSpace = false;
