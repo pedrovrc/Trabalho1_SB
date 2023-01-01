@@ -40,13 +40,9 @@ int main(int argc, char* argv[]) {
         } else if ((string)argv[1] == "-o") {   // executa pre-processamento, macros e tradutor
             preprocessamento(nome_arq_upper);
             macros(nome_preproc);
-
-            fstream codigo_macros;
-            codigo_macros.open("macros.mcr", ios::in);
             
-            tradutor(codigo_macros);
+            tradutor();
 
-            codigo_macros.close();
         } else {    // diretiva de uso do programa nao reconhecida
             cout << "Uso incorreto do programa1. Exemplo de uso: ./montador -o programa" << endl;
         }
