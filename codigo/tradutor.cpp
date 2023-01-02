@@ -3,7 +3,8 @@
 #include "tradutor.h"
 using namespace std;
 
-bool invalido(string token) {
+bool invalido(string token)
+{
     if (regex_match(token, regex("^-\\d+$")))
         return false;
     if (regex_match(token, regex("^\\d+\\D+")))
@@ -13,15 +14,11 @@ bool invalido(string token) {
     return false;
 }
 
-void parser() {
+void parser()
+{
     fstream codigo_base;
 
     codigo_base.open("macros.mcr", fstream::in);
-
-    if (!codigo_base)
-    {
-        cout << "Erro" << endl;
-    }
 
     token temp;
     vector<token> words;
@@ -42,7 +39,7 @@ void parser() {
 
     for (int i = 0; i < (int)words.size(); i++)
         if (invalido(words[i].word))
-            cout << "token invalido na linha " << words[i].linha << " :" << words[i].word << endl;
+            cout << "Erro lexico na linha " << words[i].linha << " :" << words[i].word << endl;
 
     codigo_base.close();
 }
@@ -155,9 +152,12 @@ void tradutor()
     vector<int> resultado;
     lastWordSpace = false;
     bool lastWordSConst = false;
+    bool lastWordLabel = false;
+    linha = 0;
 
     while (getline(codigo_base, line))
     {
+        linha++;
         istringstream iss(line);
         while (iss >> word)
         {
@@ -167,9 +167,16 @@ void tradutor()
                 lastWordSpace = false;
             }
 
+            if (lastWordLabel && !label(word))
+            {
+                lastWordLabel = false;
+            }
+            
             if (instrucao(word))
             {
-                resultado.push_back(instrucao(word));
+                int temp = instrucao(word);
+                resultado.push_back(temp);
+                
             }
             else if (diretiva(word))
             {
@@ -185,7 +192,9 @@ void tradutor()
             }
             else if (label(word))
             {
-                // faz nada
+                if (lastWordLabel)
+                    cout << "Erro semantico na linha " << linha << ": Mais de um label na linha" << endl;
+                lastWordLabel = true;
             }
             else if (regex_match(word, regex("^\\d+$"))) // numero
             {
@@ -225,7 +234,7 @@ void tradutor()
                     if (!encontrado)
                     {
                         // erro de label nao declarado
-                        cout << "erro de label nao declarado" << endl;
+                        cout << "Erro semantico na linha " << linha << ": Rotulo nao definido" << endl;
                     }
                 }
                 else if (regex_match(word, regex("^\\w+\\,\\w+$"))) // caso L1,L2
@@ -246,7 +255,7 @@ void tradutor()
                     if (!encontrado)
                     {
                         // erro de label nao declarado
-                        cout << "erro de label nao declarado" << endl;
+                        cout << "Erro semantico na linha " << linha << endl;
                     }
 
                     encontrado = false;
@@ -261,8 +270,13 @@ void tradutor()
                     if (!encontrado)
                     {
                         // erro de label nao declarado
-                        cout << "erro de label nao declarado" << endl;
+                        cout << "Erro semantico na linha " << linha << endl;
                     }
+                    else
+                    {
+                            cout << "Erro semantico na linha " << linha << ": numero errado de argumentos" << endl;
+                    }
+                    
                 }
                 else // variavel padrao
                 {
@@ -278,7 +292,7 @@ void tradutor()
                     if (!encontrado)
                     {
                         // erro de label nao declarado
-                        cout << "erro de label nao declarado" << endl;
+                        cout << "Erro semantico na linha " << linha << endl;
                     }
                 }
             }
@@ -288,7 +302,8 @@ void tradutor()
     ofstream saida;
     saida.open("saida.o");
 
-    for (int i = 0; i < (int)resultado.size(); i++) {
+    for (int i = 0; i < (int)resultado.size(); i++)
+    {
 
         cout << resultado[i] << " ";
         saida << resultado[i] << " ";

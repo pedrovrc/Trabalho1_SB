@@ -41,6 +41,7 @@ int main(int argc, char* argv[]) {
             preprocessamento(nome_arq_upper);
             macros(nome_preproc);
             
+            parser();
             tradutor();
 
         } else {    // diretiva de uso do programa nao reconhecida

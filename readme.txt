@@ -1,6 +1,6 @@
 Alunos envolvidos no trabalho:
     - Pedro Victor Rodrigues de Carvalho - 17/0113043
-    - <Colocar seu nome aqui>
+    - Pedro Augusto Coelho Nunes - 16/0141044
 
 Sistema operacional utilizado: Ubuntu Linux (desenvolvido via Microsoft WSL)
 
