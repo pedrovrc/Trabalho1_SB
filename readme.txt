@@ -19,7 +19,8 @@ Passos para a compilação do programa:
         - sudo apt install make
         - sudo apt install build-essential
     
-Para executar o programa, digite no terminal:
+Para executar o programa, coloque o arquivo de entrada (com extensão .asm) no
+diretório "codigo" e então digite no terminal:
     - ./montador <flag> <nome_arquivo>
 em que:
     <flag>          -p    - Executa somente pré-processamento.
